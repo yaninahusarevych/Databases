@@ -1,4 +1,4 @@
-USE  passportcreation;
+USE  passport1;
 
 ALTER TABLE passport
 	MODIFY COLUMN type_of_passport ENUM('tourist', 'regular') NOT NULL,
@@ -16,4 +16,3 @@ ALTER TABLE documents
 DESCRIBE passport;
 DESCRIBE stuff;
 DESCRIBE documents;
-    

@@ -1,6 +1,7 @@
-CREATE DATABASE PassportCreation;
+CREATE DATABASE passport1;
+USE passport1;
 
-CREATE TABLE PassportCreation.department_of_migration_service (
+CREATE TABLE department_of_migration_service (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     region VARCHAR(50) NOT NULL,
     town_or_village VARCHAR(50) NOT NULL,
@@ -9,7 +10,7 @@ CREATE TABLE PassportCreation.department_of_migration_service (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE PassportCreation.stuff (
+CREATE TABLE stuff (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     head_name VARCHAR(50) NOT NULL,
     head_surname VARCHAR(50) NOT NULL,
@@ -17,13 +18,13 @@ CREATE TABLE PassportCreation.stuff (
     former_name VARCHAR(50) NOT NULL,
     former_surname VARCHAR(50) NOT NULL,
     former_patronymic VARCHAR(50) NOT NULL,
+    department_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT department_id FOREIGN KEY (id)
-    REFERENCES PassportCreation.department_of_migration_service (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT department_id FOREIGN KEY (id) REFERENCES department_of_migration_service (id)
 );
 
-CREATE TABLE PassportCreation.person (
-	id INT UNSIGNED NOT NULL,
+CREATE TABLE person (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     person_name VARCHAR(50) NOT NULL,
     person_surname VARCHAR(50) NOT NULL,
     person_patronymic VARCHAR(50),
@@ -40,27 +41,27 @@ CREATE TABLE PassportCreation.person (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE PassportCreation.passport (
-	id INT UNSIGNED NOT NULL,
+CREATE TABLE passport (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     record_number INT UNSIGNED NOT NULL,
     date_of_issue DATE NOT NULL,
     date_of_expiry DATE NOT NULL,
     country_code CHAR(3) NOT NULL,
     price SMALLINT UNSIGNED,
     type_of_passport CHAR NOT NULL,
+    stuff_id INT UNSIGNED NOT NULL,
+    person_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT stuff_id FOREIGN KEY (id)
-    REFERENCES PassportCreation.stuff (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT person_id FOREIGN KEY (id)
-    REFERENCES PassportCreation.person (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT stuff_id FOREIGN KEY (id) REFERENCES stuff (id),
+    CONSTRAINT person_id FOREIGN KEY (id) REFERENCES person (id) 
 );
 
-CREATE TABLE PassportCreation.documents (
+CREATE TABLE documents (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     photo BLOB NOT NULL,
     stemp BLOB NOT NULL,
+    passport_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT passport_id FOREIGN KEY (id)
-    REFERENCES PassportCreation.passport (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT passport_id FOREIGN KEY (id) REFERENCES passport (id) 
 );
 

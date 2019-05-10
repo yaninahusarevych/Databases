@@ -2,7 +2,6 @@ USE passport1;
 
 SELECT region FROM department_of_migration_service WHERE id=1;
 
-SELECT * FROM department_of_migration_service WHERE town_or_village='Lviv';
 SELECT person.id, person.person_name, person.person_surname, person.person_patronymic,
 passport.record_number, passport.passport_number
 FROM person LEFT JOIN passport ON passport.person_id=person.id;

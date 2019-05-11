@@ -29,5 +29,3 @@ WHERE passport.person_id IN (SELECT person.id FROM person WHERE person.town_or_v
 SELECT person.id, person.person_name, person.person_surname, person.person_patronymic FROM person
 WHERE NOT EXISTS (SELECT * FROM passport WHERE passport.person_id = person.id)
 ORDER BY person.id;
-
-
